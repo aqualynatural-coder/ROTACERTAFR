@@ -246,14 +246,7 @@ export default function AdminDashboard() {
       </div>
     </div>
   );
-import { useState } from 'react';
-import { Truck, MapPin, CheckCircle2, Bell, Plus, Loader2 } from 'lucide-react'; // use os ícones que já tiver importado
-import { MapContainer, TileLayer, Marker, Popup, CircleMarker } from 'react-leaflet';
-import { formatDistanceToNow } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
-import api from '../../services/api';
-
-// 1. Componente do Painel de Limpeza
+} 
 function ResetDataPanel() {
   const [options, setOptions] = useState({
     deliveries: true,
@@ -282,9 +275,7 @@ function ResetDataPanel() {
 
   return (
     <div className="card p-6 mt-6 border border-red-500/20 bg-slate-900/50">
-      <h3 className="text-lg font-bold mb-2 text-red-400 flex items-center gap-2">
-        ⚠️ Painel de Limpeza de Dados (Reset)
-      </h3>
+      <h3 className="text-lg font-bold mb-2 text-red-400">⚠️ Painel de Limpeza de Dados (Reset)</h3>
       <p className="text-sm text-slate-400 mb-4">
         Selecione abaixo quais informações de demonstração você deseja remover para começar a usar o sistema limpo:
       </p>
@@ -338,53 +329,6 @@ function ResetDataPanel() {
       >
         {loading ? 'Limpando dados...' : 'Executar Limpeza Selecionada'}
       </button>
-    </div>
-  );
-}
-
-export default function Dashboard() {
-  // (Mantenha aqui todo o resto da lógica e variáveis que o seu dashboard original já possui: live, inTransit, completed, alerts, etc.)
-
-  return (
-    <div className="space-y-6">
-      {/* O grid do Mapa e Alertas que você mandou */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Mapa */}
-        <div className="lg:col-span-2 card p-4">
-          <div className="flex items-center justify-between mb-3">
-            <div>
-              <h2 className="font-bold text-lg">Mapa em tempo real</h2>
-              <p className="text-sm text-slate-500">
-                {/* {live.length} motorista(s) transmitindo localização */}
-              </p>
-            </div>
-            <span className="badge bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              AO VIVO
-            </span>
-          </div>
-          <div className="h-[420px] rounded-xl overflow-hidden">
-            {/* Seu MapContainer continua aqui exato */}
-          </div>
-        </div>
-
-        {/* Alertas */}
-        <div className="card p-4">
-          <div className="flex items-center gap-2 mb-3">
-            <Bell className="w-5 h-5 text-brand-500" />
-            <h2 className="font-bold text-lg">Alertas recentes</h2>
-          </div>
-          {/* Suas listas de alertas aqui */}
-        </div>
-      </div>
-
-      {/* Listas (Entregas em andamento e concluídas) */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* ... seu código das listas de entregas ... */}
-      </div>
-
-      {/* 2. INSERIMOS O PAINEL DE RESET AQUI NO FINAL DA PÁGINA DO ADMIN */}
-      <ResetDataPanel />
     </div>
   );
 }
