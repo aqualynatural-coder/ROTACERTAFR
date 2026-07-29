@@ -247,3 +247,88 @@ export default function AdminDashboard() {
     </div>
   );
 }
+function ResetDataPanel() {
+  const [options, setOptions] = useState({
+    deliveries: true,
+    routes: false,
+    customers: false,
+    drivers: false,
+  });
+  const [loading, setLoading] = useState(false);
+
+  const handleReset = async () => {
+    if (!window.confirm('Tem certeza que deseja apagar os dados selecionados? Essa ação não pode ser desfeita.')) {
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const response = await api.post('/admin/reset-data', options);
+      alert(response.data.message || 'Limpeza realizada com sucesso!');
+      window.location.reload();
+    } catch (error: any) {
+      alert(error.response?.data?.error || 'Erro ao realizar limpeza.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="card p-6 mt-6 border border-red-500/20 bg-slate-900/50">
+      <h3 className="text-lg font-bold mb-2 text-red-400">⚠️ Painel de Limpeza de Dados (Reset)</h3>
+      <p className="text-sm text-slate-400 mb-4">
+        Selecione abaixo quais informações de demonstração você deseja remover para começar a usar o sistema limpo:
+      </p>
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <label className="flex items-center space-x-3 cursor-pointer p-3 rounded-lg bg-slate-800/50">
+          <input 
+            type="checkbox" 
+            checked={options.deliveries}
+            onChange={(e) => setOptions({ ...options, deliveries: e.target.checked })}
+            className="w-4 h-4 accent-red-500"
+          />
+          <span className="text-sm">Zerar Entregas</span>
+        </label>
+
+        <label className="flex items-center space-x-3 cursor-pointer p-3 rounded-lg bg-slate-800/50">
+          <input 
+            type="checkbox" 
+            checked={options.routes}
+            onChange={(e) => setOptions({ ...options, routes: e.target.checked })}
+            className="w-4 h-4 accent-red-500"
+          />
+          <span className="text-sm">Zerar Rotas</span>
+        </label>
+
+        <label className="flex items-center space-x-3 cursor-pointer p-3 rounded-lg bg-slate-800/50">
+          <input 
+            type="checkbox" 
+            checked={options.customers}
+            onChange={(e) => setOptions({ ...options, customers: e.target.checked })}
+            className="w-4 h-4 accent-red-500"
+          />
+          <span className="text-sm">Zerar Clientes</span>
+        </label>
+
+        <label className="flex items-center space-x-3 cursor-pointer p-3 rounded-lg bg-slate-800/50">
+          <input 
+            type="checkbox" 
+            checked={options.drivers}
+            onChange={(e) => setOptions({ ...options, drivers: e.target.checked })}
+            className="w-4 h-4 accent-red-500"
+          />
+          <span className="text-sm">Zerar Motoristas</span>
+        </label>
+      </div>
+
+      <button 
+        onClick={handleReset}
+        disabled={loading}
+        className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-6 rounded-lg transition disabled:opacity-50 text-sm"
+      >
+        {loading ? 'Limpando dados...' : 'Executar Limpeza Selecionada'}
+      </button>
+    </div>
+  );
+}
